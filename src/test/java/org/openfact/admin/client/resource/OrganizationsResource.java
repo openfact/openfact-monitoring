@@ -3,6 +3,7 @@ package org.openfact.admin.client.resource;
 import javax.json.JsonObject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Path("/admin/organizations")
@@ -18,6 +19,6 @@ public interface OrganizationsResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    List<JsonObject> findAll();
+    Response findAll();
 
 }

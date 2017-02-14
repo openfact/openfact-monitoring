@@ -3,6 +3,8 @@ package org.openfact.admin.client;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.openfact.admin.Openfact;
+import org.openfact.admin.OpenfactBuilder;
 
 import javax.json.JsonObject;
 import javax.ws.rs.client.Client;
@@ -16,18 +18,11 @@ import static org.junit.Assert.assertNotNull;
 
 public class OrganizationsAdminResourceIT {
 
-    private Client client;
-    private WebTarget tut;
-
-    @Before
-    public void initClient() {
-        this.client = ClientBuilder.newClient();
-        this.tut = this.client.target("http://localhost:8081/openfact/admin");
-    }
+    private Openfact openfact = null;
 
     @Test
     public void organizations() {
-        Response response = this.tut.request(MediaType.APPLICATION_JSON).get();
+        Response response = this.openfact.organizations().findAll();
         Assert.assertThat(response.getStatus(), is(200));
 
         JsonObject result = response.readEntity(JsonObject.class);
