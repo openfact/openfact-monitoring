@@ -21,15 +21,11 @@ import org.jboss.resteasy.client.jaxrs.ResteasyClient;
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
 import org.keycloak.admin.client.Keycloak;
-import org.keycloak.admin.client.KeycloakBuilder;
 import org.openfact.admin.client.resource.OrganizationResource;
 import org.openfact.admin.client.resource.OrganizationsResource;
 import org.openfact.admin.client.resource.ServerInfoResource;
 
-import javax.net.ssl.SSLContext;
 import java.net.URI;
-
-import static org.keycloak.OAuth2Constants.PASSWORD;
 
 /**
  * Provides a Openfact client. By default, this implementation uses a {@link ResteasyClient RESTEasy client} with the
