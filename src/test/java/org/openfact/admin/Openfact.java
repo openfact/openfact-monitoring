@@ -21,29 +21,36 @@ import org.jboss.resteasy.client.jaxrs.ResteasyClient;
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
 import org.keycloak.admin.client.Keycloak;
+import org.keycloak.admin.client.resource.BearerAuthFilter;
 import org.openfact.admin.client.resource.OrganizationResource;
 import org.openfact.admin.client.resource.OrganizationsResource;
 import org.openfact.admin.client.resource.ServerInfoResource;
 
 import java.net.URI;
 
-/**
- * Provides a Openfact client. By default, this implementation uses a {@link ResteasyClient RESTEasy client} with the
- * default {@link ResteasyClientBuilder} settings. To customize the underling client, use a {@link OpenfactBuilder} to
- * create a Openfact client.
- *
- * @see OpenfactBuilder
- */
 public class Openfact {
 
+    private final Config config;
     private final Keycloak keycloakClient;
     private final ResteasyWebTarget target;
     private final ResteasyClient client;
 
-    public Openfact(String serverUrl, String organization, Keycloak keycloakClient, ResteasyClient client) {
+    Openfact(String serverUrl, Keycloak keycloakClient, ResteasyClient resteasyClient) {
+        this.config = new Config(serverUrl);
+        this.client = resteasyClient != null ? resteasyClient : new ResteasyClientBuilder().connectionPoolSize(10).build();
         this.keycloakClient = keycloakClient;
-        this.target = null;
-        this.client = null;
+
+        this.client.register(newAuthFilter());
+        this.target = client.target(config.getServerUrl());
+        //this.target.register(newAuthFilter());
+    }
+
+    private BearerAuthFilter newAuthFilter() {
+        return new BearerAuthFilter(keycloakClient.tokenManager());
+    }
+
+    public ResteasyWebTarget target(String uri) {
+        return client.target(uri);
     }
 
     public OrganizationsResource organizations() {

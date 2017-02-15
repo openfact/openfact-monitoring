@@ -1,24 +1,23 @@
 package org.openfact.admin.client.resource;
 
-import org.jboss.resteasy.annotations.cache.NoCache;
-
 import javax.json.JsonObject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.List;
 
 public interface OrganizationResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    JsonObject toRepresentation();
+    Response toRepresentation();
 
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
-    void update(JsonObject organizationRepresentation);
+    Response update(JsonObject organizationRepresentation);
 
     @DELETE
-    void remove();
+    Response remove();
 
     @Path("documents")
     DocumentsResource documents();
@@ -49,7 +48,6 @@ public interface OrganizationResource {
 
     @Path("events")
     @GET
-    @NoCache
     @Produces(MediaType.APPLICATION_JSON)
     List<JsonObject> getEvents(@QueryParam("type") List<String> types,
                                @QueryParam("user") String user,

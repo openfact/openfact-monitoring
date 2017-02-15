@@ -15,7 +15,7 @@ public interface OrganizationsResource {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    void create(JsonObject organizationRepresentation);
+    Response create(JsonObject organizationRepresentation);
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
