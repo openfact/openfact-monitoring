@@ -1,5 +1,6 @@
 package org.openfact.admin.client;
 
+import com.sun.corba.se.spi.activation.Server;
 import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
@@ -9,6 +10,7 @@ import org.keycloak.admin.client.KeycloakBuilder;
 import org.openfact.admin.Openfact;
 import org.openfact.admin.OpenfactBuilder;
 import org.openfact.admin.client.resource.OrganizationsResource;
+import org.openfact.admin.client.resource.ServerInfoResource;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -84,6 +86,10 @@ public class OpenfactJAXRSClient implements TestRule {
 
     public OrganizationsResource organizations() {
         return openfact.organizations();
+    }
+
+    public ServerInfoResource serverInfo() {
+        return openfact.serverInfo();
     }
 
     public ResteasyWebTarget target(String uri) {
